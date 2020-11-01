@@ -1,6 +1,6 @@
 /* eslint-disable */
 // import UserService from "@/services/modules/user.js";
-
+import moment from 'moment';
 
 // Take note that state value should always be a function to avoid unwanted shared state on the server side.
 export const state = () => ({
@@ -20,13 +20,34 @@ export const actions = {
         return userdata
     },
     async fetchLogin({commit,dispatch},credential){
+        //post user data
         const response = await this.$axios.$post('users/login',credential)
+
+        //set token to header
         this.$axios.setHeader('Authorization',response.data.token)
+
+        //get user data from another action
         const userdata =  await dispatch('fetchUser')
+
+        //set it to local storage
         localStorage.setItem("BWAMICRO:token",JSON.stringify({
             ...response.data,
             email : userdata.data.email
         }))
+
+        const userCookie = {
+            name: userdata.data.name,
+            thumbnail: userdata.data.avatar
+        }
+
+        //set expired cookie
+        // .format('ddd, DD MMM YYYY HH:mm:ss ZZ');
+        const expires = moment().add(7,'days')
+
+        //set cookie
+        document.cookie = `BWAMICRO:user=${JSON.stringify(userCookie)};expires=${expires}; path:/;`
+
+        console.log(expires);
         console.log(userdata);
         //axios standar package
         // return UserService.postLogin(credential)

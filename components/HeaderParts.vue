@@ -1,7 +1,7 @@
 <template>
     <header class="flex justify-between items-center">
         <div style="height:47px">
-            <img src="~/assets/logo.svg">
+            <Logo class="logo-micro"/>
         </div>
         <ul class="flex items-center">
             <li>
@@ -60,6 +60,7 @@
 </template>
 
 <script>
+import Logo from "~/assets/images/logo.svg?inline"
     export default {
         data(){
             return {
@@ -69,6 +70,9 @@
                     path: 'register'
                 }
             }
+        },
+        components: {
+            Logo
         },
         props : {
             mode: {
@@ -92,6 +96,12 @@
 </script>
 
 <style>
+.logo-micro path{
+    fill: #132b50
+}
+.logo-micro circle{
+    fill: #fe721c;
+}
 .light-mode {
     @apply text-black text-lg font-medium px-6 py-3
 }

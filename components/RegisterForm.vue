@@ -6,6 +6,38 @@
                 From, <br/>
                 Anywhere
             </h1>
+            <form @submit.prevent="register">
+                <!-- v-model syntatic sugar
+                    :value="user.email"
+                    @input="(value) => { user.email = value }" 
+                -->
+                <FormInput 
+                    label="Full Name" 
+                    v-model="user.name"
+                    type="text"
+                    placeholder="Your Name"
+                    id="userName"
+                />
+                <FormInput 
+                    label="Email Address" 
+                    v-model="user.email"
+                    type="email"
+                    placeholder="Your Email Address"
+                    id="userEmail"
+                />
+                <FormInput
+                    label="Password"
+                    v-model="user.password"
+                    type="password"
+                    id="userPassword"
+                    placeholder="Your Password"
+                />
+                <FormButton>
+                    <template v-slot:title>
+                        Daftar
+                    </template>
+                </FormButton>
+            </form>
         </div>
         <div class="w-1/12"></div>
         <HeroParts/>
@@ -14,7 +46,20 @@
 
 <script>
     export default {
-        
+        data (){
+            return {
+                user : {
+                    name: '',
+                    email :'',
+                    password: '',
+                }
+            }
+        },
+        methods : {
+            register (){
+                this.$store.dispatch('user/fetchLogin',this.user)
+            }
+        }
     }
 </script>
 
