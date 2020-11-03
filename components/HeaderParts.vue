@@ -33,11 +33,11 @@
                 </nuxt-link>
             </li>
             <li>
-                <nuxt-link
-                    :to="{...link}"
+                <a
+                    :href="'/'+link.path"
                     :class="['btn-login']">
                     {{ text }}
-                </nuxt-link>
+                </a>
                 <!-- <nuxt-link 
                     to="/"
                     target="_blank"
@@ -64,10 +64,10 @@ import Logo from "~/assets/images/logo.svg?inline"
     export default {
         data(){
             return {
-                login : process.env.memberPage,
+                login : 'localhost:3002',
                 text: 'Daftar',
                 link : {
-                    path: 'register'
+                    path: '/register'
                 }
             }
         },
@@ -80,7 +80,7 @@ import Logo from "~/assets/images/logo.svg?inline"
                 default : 'dark-mode'
             }
         },
-        mounted(){
+        created(){
             let curRoute = this.$route.path;
 
             if(curRoute == '/login'){

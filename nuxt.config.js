@@ -21,7 +21,7 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
-    '~/plugins/api'
+    '~/plugins/api',
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -39,15 +39,36 @@ export default {
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/auth'
+    '@nuxtjs/auth',
+    '@nuxtjs/proxy',
+    'cookie-universal-nuxt',
   ],
 
+  router: {
+    prefetchLinks: false
+  },
+
   axios : {
-    baseURL: process.env.BASE_URL, 
+    baseURL: process.env.BASE_URL,
+    frontPage: process.env.FRONT_PAGE,
   },
 
   auth : {
-
+    strategies: {
+      local : {
+        endpoints: {
+          login: {url : '/login', method: 'post'},
+          user : {url : '/user', method: 'get'},
+          logout: false,
+        }
+      }
+    },
+    redirect: {
+      login: '/user',
+      logout: '/login',
+      user : '/user',
+      callback : '/login'
+    }
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
@@ -58,7 +79,8 @@ export default {
   },
 
   env : {
-    baseUrl: process.env.BASE_URL
+    baseUrl: process.env.BASE_URL,
+    frontPage: process.env.FRONT_PAGE
   },
 
   server: {

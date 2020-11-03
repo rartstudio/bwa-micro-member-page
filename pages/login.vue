@@ -1,6 +1,6 @@
 <template>
     <div>
-        <section class="container mx-auto pt-10 px-4">
+        <section class="container mx-auto pt-10 px-4">    
             <HeaderParts :mode="'light-mode'"/>
         </section>
         <section class="container mx-auto pt-10 px-4">
@@ -14,7 +14,7 @@
 
 <script>
     export default {
-        
+        middleware: 'login'
     }
 </script>
 

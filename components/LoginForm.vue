@@ -47,8 +47,8 @@
             }
         },
         methods : {
-            login (){
-                this.$store.dispatch('user/fetchLogin',this.user)
+            async login (){
+                await this.$store.dispatch('user/fetchLogin',this.user)
             }
         }
     }

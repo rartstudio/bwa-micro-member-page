@@ -1,4 +1,4 @@
-export default function ({ $axios }) {
+export default function ({ $axios,context,redirect }) {
     // Create a custom axios instance
     const api = $axios.create({
       headers: {
