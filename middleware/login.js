@@ -1,12 +1,8 @@
-export default ({ app,redirect }) => {
-    const cookieRes = app.$cookies.get('BWAMICRO:token')
-
-    if(cookieRes){
+export default ({store,redirect }) => {
+    if(!store.state.user.userData){
         redirect('/user')
     }
-    else {
-        redirect('/login')
-    }
+    redirect('/login')
 }
 
 // await store.dispatch('user/setToken')

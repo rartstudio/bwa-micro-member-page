@@ -24,6 +24,9 @@
                     id="userPassword"
                     placeholder="Your Password"
                 />
+                <template v-if="getErrorText">
+                    <span class="text-red-600 text-sm">{{getErrorText}}</span>
+                </template>
                 <FormButton>
                     <template v-slot:title>
                         Masuk
@@ -37,6 +40,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
     export default {
         data (){
             return {
@@ -45,6 +49,9 @@
                     password: '',
                 }
             }
+        },
+        computed: {
+            ...mapGetters('user',['getErrorText'])
         },
         methods : {
             async login (){

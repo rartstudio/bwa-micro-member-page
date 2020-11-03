@@ -9,11 +9,12 @@
             @input="updateValue"
             :value="value"
             :placeholder="placeholder"
-            class="bg-white border border-gray-600 w-full px-6 py-3 focus:outline-none focus:border-teal-500"/>
+            :class="[getError ? 'input-error' : 'input-normal', 'input-style']">
     </div>
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
     export default {
         props: {
             inputId: {
@@ -39,10 +40,24 @@
             updateValue(){
                 this.$emit('input',event.target.value)
             }
+        },
+        computed : {
+            ...mapGetters('user',['getError'])
         }
     }
 </script>
 
 <style lang="scss" scoped>
-
+.input-style {
+    @apply bg-white border w-full px-6 py-3; 
+}
+.input-style:focus {
+    @apply outline-none border-teal-500;
+}
+.input-normal {
+    @apply border-gray-600;
+}
+.input-error {
+    @apply border-red-600;
+}
 </style>

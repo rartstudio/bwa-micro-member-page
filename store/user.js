@@ -5,18 +5,26 @@ import moment from 'moment';
 
 // Take note that state value should always be a function to avoid unwanted shared state on the server side.
 export const state = () => ({
+    isError: false,
     isLoading: false,
     course : null,
     token: null,
-    user: null
+    userData: null,
+    error : null
 })
 
 export const mutations = {
     SET_COURSES(state,data){
         state.courses = data
     },
+    SET_ERROR_NOTIF(state,data){
+        state.error = data
+    },
+    SET_ERROR(state,data){
+        state.isError = data
+    },
     SET_USER(state,data){
-        state.user = data
+        state.userData = data
     },
     SET_TOKEN(state,data){
         state.token = data
@@ -30,31 +38,6 @@ export const mutations = {
 }
 
 export const actions = {
-    async fetchUser({commit,state,dispatch}){
-        try{
-            const token = this.$cookies.get('BWAMICRO:token')
-
-            if(state.token){
-                await dispatch('setHeaderToken',state.token)
-            }
-
-            else {
-                await dispatch('setHeaderToken',token)
-            }
-
-            const response = await this.$axios.$get('users')
-            const userCookie = {
-                name: response.data.name,
-                thumbnail: response.data.avatar,
-                email: response.data.email
-            }
-            commit('SET_USER',response.data)
-            dispatch('setCookieUser',userCookie)
-        }
-        catch (error){
-            console.log(error)
-        }
-    },
     setHeaderToken({commit},token){
         // Overrides `Authorization` header with new value
         this.$axios.setHeader('Authorization',token)
@@ -76,47 +59,82 @@ export const actions = {
         const data = JSON.stringify(token)
         this.$cookies.set('BWAMICRO:refresh',data,{expires: expiredTime._d})
     },
-    logout({state}){
-        return this.$axios.$post('users/logout',state.user.id).then(response => {
-            this.$cookies.remove('BWAMICRO:token')
-            this.$cookies.remove('BWAMICRO:refresh')
-            this.$cookies.remove('BWAMICRO:user')
-            this.$router.push('/login')
-            console.log('logout sukses')}).catch(e => console.log(e))
+    fetchUser({commit,dispatch}){
+        return this.$axios.$get('users')
+            .then(response => {
+                commit('SET_USER',response.data)
+                const userCookie = {
+                    name: response.data.name,
+                    thumbnail: response.data.avatar,
+                    email: response.data.email,
+                    id : response.data.id
+                }
+                dispatch('setCookieUser',userCookie)
+                commit('SET_ERROR',false)
+            })
+            .catch(error => {
+                if(error.response.status == 403) {
+                    commit('SET_ERROR_NOTIF',error.response.data.message)
+                    commit('SET_ERROR',true)
+                }
+            })
     },
-    async tokenRefresh({commit,dispatch},credential){
-        try {
-            const response = await this.$axios.$post('refresh-tokens',credential)
-
-            await dispatch('setCookieToken',response.data.token)
-
-            dispatch('fetchUser')
-
-            console.log('from token refresh')
-        }
-        catch (e){
-            console.log(e)
-        }
+    fetchLogout({state}){
+        return this.$axios.$post('users/logout',state.userData.id)
+            .then(response => {
+                this.$cookies.remove('BWAMICRO:token')
+                this.$cookies.remove('BWAMICRO:refresh')
+                this.$cookies.remove('BWAMICRO:user')
+                this.$router.push('/login')
+                this.$axios.setHeader('Authorization','')
+                console.log('logout sukses')
+            })
+            .catch(e => console.log(e))
     },
-    async fetchLogin({commit,dispatch},credential){
-
-        try {
-            const response = await this.$axios.$post('users/login',credential)
-
-            await dispatch('setCookieToken',response.data.token)
-            await dispatch('setCookieRefresh',response.data.refresh_token)
-
-            //get user data from another action
-            await dispatch('fetchUser')
-
-            this.$router.push('/user')
-            
-        } catch (error) {
-            console.log(error)
-        }
+    tokenRefresh({dispatch},credential){
+        return this.$axios.$post('refresh-tokens',credential)
+            .then(response => {
+                dispatch('setCookieToken',response.data.token)
+                dispatch('fetchUser')
+                commit('SET_ERROR',false)
+            })
+            .catch(error => {
+                if(error.response.status == 403) {
+                    commit('SET_ERROR_NOTIF',error.response.data.message)
+                    commit('SET_ERROR',true)
+                    this.$router.push('/login')
+                }
+            })
+        
+    },
+    fetchLogin({commit,dispatch},credential){
+        return this.$axios.$post('users/login',credential)
+            .then(response => {
+                dispatch('setCookieToken',response.data.token)
+                dispatch('setCookieRefresh',response.data.refresh_token)
+                dispatch('setHeaderToken',response.data.token)
+                dispatch('fetchUser')
+                commit('SET_ERROR',false)
+                this.$router.push('/user')
+            })
+            .catch(error => {                
+                if(error.response.status == 404) {
+                    commit('SET_ERROR_NOTIF',error.response.data.message)
+                    commit('SET_ERROR',true)
+                }
+                if(error.response.status == 400) {
+                    commit('SET_ERROR_NOTIF','Password Minimal 6 Huruf')
+                    commit('SET_ERROR',true)
+                }
+            })
     }
 }
 
 export const getters = {
-    
+    getErrorText : state => {
+        return state.error
+    },
+    getError : state => {
+        return state.isError
+    }
 }
