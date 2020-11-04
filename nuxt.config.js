@@ -51,25 +51,7 @@ export default {
 
   axios : {
     baseURL: process.env.BASE_URL,
-    frontPage: process.env.FRONT_PAGE,
-  },
-
-  auth : {
-    strategies: {
-      local : {
-        endpoints: {
-          login: {url : '/login', method: 'post'},
-          user : {url : '/user', method: 'get'},
-          logout: false,
-        }
-      }
-    },
-    redirect: {
-      login: '/user',
-      logout: '/login',
-      user : '/user',
-      callback : '/login'
-    }
+    credentials: true,
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)

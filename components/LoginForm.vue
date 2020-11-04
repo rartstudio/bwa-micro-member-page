@@ -55,7 +55,16 @@ import {mapGetters} from 'vuex'
         },
         methods : {
             async login (){
-                await this.$store.dispatch('user/fetchLogin',this.user)
+                try{
+                    await this.$store.dispatch('user/fetchLogin',this.user)
+                    if(!this.$store.state.user.isError){
+                        await this.$store.dispatch('user/fetchUser')
+                        await this.$router.push({name: 'user'})
+                    }
+                }
+                catch (e){
+
+                }
             }
         }
     }

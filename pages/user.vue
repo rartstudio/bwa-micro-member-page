@@ -1,6 +1,14 @@
 <template>
     <div>
-        authenticated page {{ this.user.userData }}
+        <template v-if="$fetchState.pending">
+            loading user data
+        </template>
+        <template v-else-if="$fetchState.error">
+            error while fetching data
+        </template>
+        <template v-else>
+            authenticated page {{ this.user.userData }}
+        </template>
         <button class="px-2 py-3 bg-indigo-1000 text-white"@click="logout">
             keluar
         </button>
@@ -14,34 +22,39 @@
 import {mapState} from 'vuex'
     export default {
         middleware: 'user',
+        fetchOnServer: false,
         computed : {
             ...mapState(['user'])
         },
-        mounted(){
+        //we can have one fetch for each component, 
+        //fetch hooks are called in sequence of their hierarchy.
+        async fetch(){
             const token = this.$cookies.get('BWAMICRO:token')
 
-            if(token) {
-                this.$store.dispatch('user/setHeaderToken',token)
-                this.$store.dispatch('user/fetchUser')
-                    .then(response => {
-                        if(this.$store.state.user.isError){
-                            const refresh = this.$cookies.get('BWAMICRO:refresh')
-                            const user = this.$cookies.get('BWAMICRO:user')
-                            const data = {
-                                refresh_token : refresh,
-                                email : user.email
-                            }
-                            this.$store.dispatch('user/tokenRefresh',data)
-                                .then(response => {
-                                    const newToken = this.$cookies.get('BWAMICRO:token')
-                                    this.$store.dispatch('user/setHeaderToken',newToken)
-                                    this.$store.dispatch('user/fetchUser')
-                                })
-                        }
-                    })
-            }
-            else {
-                this.$router.push('/login')
+            await this.$store.dispatch('user/setHeaderToken',token)
+            await this.$store.dispatch('user/fetchUser')
+
+            if(this.$store.state.user.isError){
+                const refresh = this.$cookies.get('BWAMICRO:refresh')
+                const user = this.$cookies.get('BWAMICRO:user')
+                const data = {
+                    refresh_token : refresh,
+                    email : user.email
+                }
+                
+                await this.$store.dispatch('user/tokenRefresh',data)
+                //if any error will delete and push user to login again
+                if(this.$store.state.user.isError){
+                    this.$cookies.remove('BWAMICRO:token')
+                    this.$cookies.remove('BWAMICRO:user')
+                    this.$cookies.remove('BWAMICRO:refresh')
+                    this.$router.push('/login')
+                }
+
+                //if no error when refreshing
+                const newToken = this.$cookies.get('BWAMICRO:token')
+                await this.$store.dispatch('user/setHeaderToken',newToken)
+                await this.$store.dispatch('user/fetchUser')
             }
         },
         methods: {

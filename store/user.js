@@ -99,8 +99,7 @@ export const actions = {
             .catch(error => {
                 commit('SET_ERROR',true)
                 if(error.response.status == 403) {
-                    commit('SET_ERROR_NOTIF',error.response.data.message)
-                    window.location.href = process.env.frontPage;
+                    commit('SET_ERROR_NOTIF','sesi login telah berakhir ')
                 }
             })
         
@@ -111,9 +110,9 @@ export const actions = {
                 dispatch('setCookieToken',response.data.token)
                 dispatch('setCookieRefresh',response.data.refresh_token)
                 dispatch('setHeaderToken',response.data.token)
-                dispatch('fetchUser')
+                // dispatch('fetchUser')
                 commit('SET_ERROR',false)
-                this.$router.push('/user')
+                // this.$router.push('/user')
             })
             .catch(error => {                
                 commit('SET_ERROR',true)

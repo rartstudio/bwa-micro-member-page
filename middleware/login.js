@@ -1,10 +1,5 @@
 export default ({ app,redirect }) => {
     const cookieRes = app.$cookies.get('BWAMICRO:token')
 
-    if(cookieRes){
-        redirect('/user')
-    }
-    else {
-        redirect('/login')
-    }
+    if(cookieRes) redirect('/user')
 }

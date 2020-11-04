@@ -32,6 +32,13 @@
                     id="userPassword"
                     placeholder="Your Password"
                 />
+                <FormInput 
+                    label="" 
+                    v-model="user.name"
+                    type="text"
+                    placeholder="Your Name"
+                    id="userName"
+                />
                 <FormButton>
                     <template v-slot:title>
                         Daftar
