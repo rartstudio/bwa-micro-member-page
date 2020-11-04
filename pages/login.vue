@@ -14,15 +14,7 @@
 
 <script>
     export default {
-        beforeRouteUpdate(to,from,next){ 
-            const token = this.$cookies.get('BWAMICRO:token')
-
-            if(!token) {   
-                next()
-            }
-
-            next(false)
-        }
+        middleware: ['login']
     }
 </script>
 

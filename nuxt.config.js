@@ -41,6 +41,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/auth',
     '@nuxtjs/proxy',
+    '@nuxt/http',
     'cookie-universal-nuxt',
   ],
 

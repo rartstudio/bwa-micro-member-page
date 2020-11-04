@@ -73,9 +73,9 @@ export const actions = {
                 commit('SET_ERROR',false)
             })
             .catch(error => {
+                commit('SET_ERROR',true)
                 if(error.response.status == 403) {
                     commit('SET_ERROR_NOTIF',error.response.data.message)
-                    commit('SET_ERROR',true)
                 }
             })
     },
@@ -85,24 +85,22 @@ export const actions = {
                 this.$cookies.remove('BWAMICRO:token')
                 this.$cookies.remove('BWAMICRO:refresh')
                 this.$cookies.remove('BWAMICRO:user')
-                this.$router.push('/login')
                 this.$axios.setHeader('Authorization','')
-                console.log('logout sukses')
+                window.location.href = process.env.frontPage;
             })
             .catch(e => console.log(e))
     },
-    tokenRefresh({dispatch},credential){
+    tokenRefresh({dispatch,commit},credential){
         return this.$axios.$post('refresh-tokens',credential)
             .then(response => {
                 dispatch('setCookieToken',response.data.token)
-                dispatch('fetchUser')
                 commit('SET_ERROR',false)
             })
             .catch(error => {
+                commit('SET_ERROR',true)
                 if(error.response.status == 403) {
                     commit('SET_ERROR_NOTIF',error.response.data.message)
-                    commit('SET_ERROR',true)
-                    this.$router.push('/login')
+                    window.location.href = process.env.frontPage;
                 }
             })
         
@@ -118,13 +116,12 @@ export const actions = {
                 this.$router.push('/user')
             })
             .catch(error => {                
+                commit('SET_ERROR',true)
                 if(error.response.status == 404) {
                     commit('SET_ERROR_NOTIF',error.response.data.message)
-                    commit('SET_ERROR',true)
                 }
                 if(error.response.status == 400) {
                     commit('SET_ERROR_NOTIF','Password Minimal 6 Huruf')
-                    commit('SET_ERROR',true)
                 }
             })
     }
