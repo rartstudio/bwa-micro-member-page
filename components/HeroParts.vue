@@ -3,10 +3,7 @@
         <div class="relative" style="width: 369px; height: 440px">
             <div class="absolute border-indigo-700 border-2 -mt-8 -ml-16 left-0" style="width:324px; height: 374px"></div>
             <div class="absolute w-full h-full -mb-8 -ml-8">
-                <img 
-                src="~/assets/img-hero.jpg"
-                alt="Hero Image"
-                />
+                <slot name="images"></slot>
             </div>
             <div class="absolute z-10 bg-white bottom-0 right-0 py-3 px-4 -mr-12" style="width:290px">
                 <p class="text-gray-900 mb-2">

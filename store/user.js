@@ -10,7 +10,8 @@ export const state = () => ({
     course : null,
     token: null,
     userData: null,
-    error : null
+    error : null,
+    submitError : null
 })
 
 export const mutations = {
@@ -19,6 +20,9 @@ export const mutations = {
     },
     SET_ERROR_NOTIF(state,data){
         state.error = data
+    },
+    SET_SUBMIT_ERROR(state, data){
+        state.submitError = data
     },
     SET_ERROR(state,data){
         state.isError = data
@@ -104,6 +108,17 @@ export const actions = {
             })
         
     },
+    fetchRegister({commit},credential){
+        // console.log(credential);
+        return this.$axios.$post('users/register',credential)
+            .then(response => {
+                commit('SET_ERROR',false)
+            })
+            .catch(error => {
+                commit('SET_SUBMIT_ERROR',error.response.data.message)
+                commit('SET_ERROR',true)
+            })
+    },
     fetchLogin({commit,dispatch},credential){
         return this.$axios.$post('users/login',credential)
             .then(response => {
@@ -119,9 +134,7 @@ export const actions = {
                 if(error.response.status == 404) {
                     commit('SET_ERROR_NOTIF',error.response.data.message)
                 }
-                if(error.response.status == 400) {
-                    commit('SET_ERROR_NOTIF','Password Minimal 6 Huruf')
-                }
+                commit('SET_SUBMIT_ERROR',error.response.data.message)
             })
     }
 }
@@ -132,5 +145,29 @@ export const getters = {
     },
     getError : state => {
         return state.isError
+    },
+    getNameError : state => {
+        let error = state.submitError
+        if(error) {
+            let result = error.filter(item => item.field == 'name')
+            return result[0]
+        }
+        return false
+    },
+    getEmailError : state => {
+        let error = state.submitError
+        if(error) {
+            let result = error.filter(item => item.field == 'email')
+            return result[0]
+        }
+        return false
+    },
+    getPassError : state => {
+        let error = state.submitError
+        if(error){
+            let result = error.filter(item => item.field == 'password')
+            return result[0]
+        }
+        return false
     }
 }

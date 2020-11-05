@@ -16,16 +16,21 @@
                     type="email"
                     placeholder="Your Email Address"
                     id="userEmail"
+                    :error="getEmailError"
                 />
+                <template v-if="getEmailError">
+                    <FormError :text="getEmailError.message"/>
+                </template>
                 <FormInput
                     label="Password"
                     v-model="user.password"
                     type="password"
                     id="userPassword"
                     placeholder="Your Password"
+                    :error="getPassError"
                 />
-                <template v-if="getErrorText">
-                    <span class="text-red-600 text-sm">{{getErrorText}}</span>
+                <template v-if="getPassError">
+                    <FormError :text="getPassError.message"/>
                 </template>
                 <FormButton>
                     <template v-slot:title>
@@ -35,7 +40,14 @@
             </form>
         </div>
         <div class="w-1/12"></div>
-        <HeroParts/>
+        <HeroParts>
+            <template v-slot:images>
+                <img 
+                src="~/assets/images/tamara.jpg"
+                alt="Hero Image"
+                />
+            </template>
+        </HeroParts>
     </div>
 </template>
 
@@ -51,7 +63,7 @@ import {mapGetters} from 'vuex'
             }
         },
         computed: {
-            ...mapGetters('user',['getErrorText'])
+            ...mapGetters('user',['getEmailError','getPassError'])
         },
         methods : {
             async login (){

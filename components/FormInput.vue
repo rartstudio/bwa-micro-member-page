@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col mb-4">
-        <label for="inputId" class="text-lg mb-2">
+        <label for="inputId" :class="[error  ? 'text-red-600' : '','text-lg','mb-2'] ">
             {{ label }}
         </label>
         <input 
@@ -9,7 +9,7 @@
             @input="updateValue"
             :value="value"
             :placeholder="placeholder"
-            :class="[getError ? 'input-error' : 'input-normal', 'input-style']">
+            :class="[error ? 'input-error' : 'input-normal', 'input-style']">
     </div>
 </template>
 
@@ -17,6 +17,10 @@
 import {mapGetters} from 'vuex'
     export default {
         props: {
+            error : {
+                type: [Boolean,Object],
+                default : false
+            },
             inputId: {
                 type: String
             },
@@ -40,9 +44,6 @@ import {mapGetters} from 'vuex'
             updateValue(){
                 this.$emit('input',event.target.value)
             }
-        },
-        computed : {
-            ...mapGetters('user',['getError'])
         }
     }
 </script>
@@ -58,6 +59,6 @@ import {mapGetters} from 'vuex'
     @apply border-gray-600;
 }
 .input-error {
-    @apply border-red-600;
+    @apply border-red-600 text-red-600;
 }
 </style>

@@ -14,7 +14,12 @@
 
 <script>
     export default {
-        middleware: ['login']
+        middleware: ['login'],
+        beforeDestroy(){
+            this.$store.commit('user/SET_ERROR',false)
+            this.$store.commit('user/SET_ERROR_NOTIF',null)
+            this.$store.commit('user/SET_SUBMIT_ERROR')
+        }
     }
 </script>
 

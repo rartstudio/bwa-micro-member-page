@@ -5,11 +5,11 @@
         </div>
         <ul class="flex items-center">
             <li>
-                <nuxt-link 
-                    to="/" 
+                <a 
+                    :href="home" 
                     :class="[mode == 'dark-mode' ? 'dark-mode' : mode]">
                     Home
-                </nuxt-link>
+                </a>
             </li>
             <li>
                 <nuxt-link 
@@ -33,27 +33,16 @@
                 </nuxt-link>
             </li>
             <li>
-                <a
+                <!-- <a
                     :href="'/'+link.path"
                     :class="['btn-login']">
                     {{ text }}
-                </a>
-                <!-- <nuxt-link 
-                    to="/"
-                    target="_blank"
-                    rel="noopener noereferrer" 
-                    class="text-lg text-white font-medium px-6 py-3  ml-6 inline-flex items-center duration-200 transition-all hover:bg-indigo-800 hover:text-teal-500">
-                    
-                    <span class="rounded-full overflow-hidden mr-3 border-2 border-orange-500">
-                        <img
-                            class="object-cover w-8 h-8 inline-block"
-                        />
-                        <img
-                            class="fill-indigo-500 w-8 h-8 inline-block"
-                        />
-                    </span>
-                    Hi,
-                </nuxt-link> -->
+                </a> -->
+                <nuxt-link 
+                    :to="{...link}" 
+                    :class="['btn-login']">
+                    {{ text }}
+                </nuxt-link>
             </li>
         </ul>
     </header>
@@ -64,7 +53,7 @@ import Logo from "~/assets/images/logo.svg?inline"
     export default {
         data(){
             return {
-                login : 'localhost:3002',
+                home : process.env.frontPage,
                 text: 'Daftar',
                 link : {
                     path: '/register'
