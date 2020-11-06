@@ -1,5 +1,5 @@
 <template>
-    <StateLayout>
+    <StateLayout link="/login">
         <template v-slot:state-image>
             <img
                 src="~assets/images/illustration-private.jpg"

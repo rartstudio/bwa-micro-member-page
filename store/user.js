@@ -11,10 +11,14 @@ export const state = () => ({
     token: null,
     userData: null,
     error : null,
-    submitError : null
+    submitError : null,
+    myCourses: null
 })
 
 export const mutations = {
+    SET_MY_COURSES(state,data){
+        state.myCourses = data
+    },
     SET_COURSES(state,data){
         state.courses = data
     },
@@ -135,6 +139,12 @@ export const actions = {
                     commit('SET_ERROR_NOTIF',error.response.data.message)
                 }
                 commit('SET_SUBMIT_ERROR',error.response.data.message)
+            })
+    },
+    fetchMyCourses({commit},id){
+        return this.$axios.$get(`my-courses?user_id=${id}`)
+            .then(response => {
+                commit('SET_MY_COURSES',response.data)
             })
     }
 }

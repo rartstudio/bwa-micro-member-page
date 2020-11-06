@@ -192,6 +192,9 @@ module.exports = {
         teal : {
           500 : '#38b2ac'
         },
+        indigo: {
+          500 : '#53589D'
+        },
         white: '#fff'
       },
       flex: {
