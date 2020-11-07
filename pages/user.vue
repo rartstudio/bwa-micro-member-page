@@ -96,8 +96,7 @@ import {mapState} from 'vuex'
 
             await this.$store.dispatch('user/setHeaderToken',token)
             await this.$store.dispatch('user/fetchUser')
-            await this.$store.dispatch('user/fetchMyCourses',this.$store.state.user.userData.id)
-            await loader.hide()
+
             if(this.$store.state.user.isError){
                 const refresh = this.$cookies.get('BWAMICRO:refresh')
                 const user = this.$cookies.get('BWAMICRO:user')
@@ -107,11 +106,13 @@ import {mapState} from 'vuex'
                 }
                 
                 await this.$store.dispatch('user/tokenRefresh',data)
+                
                 //if any error will delete and push user to login again
                 if(this.$store.state.user.isError){
                     this.$cookies.remove('BWAMICRO:token')
                     this.$cookies.remove('BWAMICRO:user')
                     this.$cookies.remove('BWAMICRO:refresh')
+                    loader.hide();
                     this.$router.push('/login')
                 }
 
@@ -119,8 +120,10 @@ import {mapState} from 'vuex'
                 const newToken = this.$cookies.get('BWAMICRO:token')
                 await this.$store.dispatch('user/setHeaderToken',newToken)
                 await this.$store.dispatch('user/fetchUser')
-                await this.$store.dispatch('user/fetchMyCourses',this.$store.state.user.userData.id)
             }
+
+            await this.$store.dispatch('user/fetchMyCourses',this.$store.state.user.userData.id)
+            await loader.hide()
         },
         methods: {
             library (){

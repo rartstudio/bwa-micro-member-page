@@ -50,7 +50,7 @@ export default {
 
   axios : {
     baseURL: process.env.BASE_URL,
-    credentials: true,
+    // credentials: true,
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)

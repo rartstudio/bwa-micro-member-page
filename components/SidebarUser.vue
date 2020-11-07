@@ -22,7 +22,7 @@
                     </nuxt-link>
                 </li>
                 <li>
-                    <a :href="`${homePage}/library`" class="nav-link">
+                    <a :href="`${homePage}/courses`" class="nav-link">
                         Library
                     </a>
                 </li>
