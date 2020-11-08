@@ -1,10 +1,7 @@
 <template>
     <div>
-        <template v-if="$fetchState.pending">
-            <div class="vld-parent" ref="loadingContainer"></div>
-        </template>
-        <template v-else-if="$fetchState.error">
-            error when get data
+        <template v-if="loadingState">
+            loading
         </template>
         <template v-else>
             <StateLayout class="mt-16">
@@ -19,10 +16,11 @@
                     Welcome to Class
                 </template>
                 <template v-slot:state-subtitle>
-                    You have successfully joined our 
+                    You have successfully joined our <br/>
                     <strong>
                         {{ course.userCourse.name ? course.userCourse.name : 'Class Name'}}
                     </strong>
+                    Class
                 </template>
                 <template v-slot:state-link>
                     Start Learn
@@ -35,10 +33,16 @@
 <script>
 import {mapState} from 'vuex'
     export default {
+        data() {
+            return {
+                loadingState : true
+            }
+        },
         computed: {
             ...mapState(['course'])
         },
-        async fetch(){
+        async mounted(){
+            this.loadingState = true
             // let loader = this.$loading.show({
             //     // Optional parameters
             //     container: this.fullPage ? null : this.$refs.loadingContainer,
@@ -47,7 +51,7 @@ import {mapState} from 'vuex'
 
             // console.log(this.$route.params.id)
             await this.$store.dispatch('course/fetchCourse',this.$route.params.id)
-
+            this.loadingState = false
             // await loader.hide()
         }
     }

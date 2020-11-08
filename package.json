@@ -19,6 +19,7 @@
     "js-cookie": "^2.2.1",
     "nuxt": "^2.14.6",
     "vue-loading-overlay": "^3.4.2",
+    "vue-youtube-embed": "^2.2.2",
     "vuejs-image-placeholder": "^0.3.0"
   },
   "devDependencies": {

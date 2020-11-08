@@ -21,8 +21,9 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
-    '~/plugins/api',
-    '~/plugins/vue-loading-overlay'
+    { src: '~/plugins/api'},
+    { src: '~/plugins/vue-loading-overlay'},
+    { src: '~plugins/vue-youtube-embed.js', mode: 'client'},
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -50,7 +51,7 @@ export default {
 
   axios : {
     baseURL: process.env.BASE_URL,
-    // credentials: true,
+    credentials: true,
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
