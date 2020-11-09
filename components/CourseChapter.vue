@@ -26,7 +26,7 @@
                 console.log(id)
                 await this.$store.dispatch('course/fetchChapter',this.chapter.id)
                 await this.$store.dispatch('course/fetchLesson',id)
-                // this.$router.push(`/courses/${this.$store.state.course.userCourse.id}/${this.$store.state.course.lessonVideo.id}`)
+                this.$router.push(`/skill/${this.$store.state.course.userCourse.id}/${this.$store.state.course.lessonVideo.id}`)
             }
         }
     }
