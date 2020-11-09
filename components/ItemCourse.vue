@@ -11,7 +11,7 @@
                 <h4 class="text-lg text-gray-900 item-title">{{item.name.toUpperCase()}}</h4>
                 <h5 class="text-sm text-gray-600">{{item.level}}</h5>
             </div>
-            <nuxt-link :to="'/courses/'+ item.id" class="link-wrapped"></nuxt-link>
+            <nuxt-link :to="'/skill/'+ item.id" class="link-wrapped"></nuxt-link>
         </div>
     </div>
 </template>
