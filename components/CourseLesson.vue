@@ -32,5 +32,7 @@ import {mapState} from 'vuex';
 </script>
 
 <style lang="scss" scoped>
-
+.nuxt-link-active {
+    @apply text-teal-500;
+}
 </style>

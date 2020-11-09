@@ -89,7 +89,6 @@ import {mapState} from 'vuex'
             let loader = this.$loading.show({
                 // Optional parameters
                 container: this.fullPage ? null : this.$refs.loadingContainer,
-                color : '#161A4F'
             });
 
             const token = this.$cookies.get('BWAMICRO:token')

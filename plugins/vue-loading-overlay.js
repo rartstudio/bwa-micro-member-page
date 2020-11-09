@@ -4,4 +4,6 @@ import Loading from 'vue-loading-overlay';
 // Import stylesheet
 import 'vue-loading-overlay/dist/vue-loading.css';
 // Init plugin
-Vue.use(Loading);
+Vue.use(Loading, {
+    color : '#161A4F'
+});
