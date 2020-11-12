@@ -1,0 +1,12 @@
+pages
+    course
+        _course
+            chapter
+                _chapter
+                    Lesson
+                        _lesson.vue
+                _chapter.vue
+        _course.vue
+
+hasil url
+course/3/chapter/2/lesson/5

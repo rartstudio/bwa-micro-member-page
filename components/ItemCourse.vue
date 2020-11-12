@@ -44,21 +44,17 @@ export default {
 .item-title {
   min-height: 25px;
 }
-
 .item figure.item-image {
   position: relative;
   perspective: 10000px;
 }
-
 .item figure.item-image:before {
   content: "";
   @apply absolute inset-0 bg-indigo-900 opacity-0 transition-all duration-200;
 }
-
 .item:hover figure.item-image:before {
   @apply opacity-75;
 }
-
 .item figure.item-image svg.icon {
   content: "";
   position: absolute;
@@ -71,11 +67,9 @@ export default {
   transform: translateX(-50%) translateY(-50%) rotateX(-45deg);
   @apply transition-all duration-300;
 }
-
 .item figure.item-image svg.icon circle {
   @apply fill-orange-500;
 }
-
 .item:hover figure.item-image svg.icon {
   opacity: 1;
   transform: translateX(-50%) translateY(-50%) rotateX(0deg);

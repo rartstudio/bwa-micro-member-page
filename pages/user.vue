@@ -8,26 +8,7 @@
         </template>
         <template v-else>
             <div class="flex">
-                <SidebarUser>
-                    <template v-slot:avatar>
-                        <template v-if="user.userData.avatar">
-                            <client-only>
-                                <img
-                                    class="object-cover w-24 h-24"
-                                    :src="user.userData.avatar"
-                                    :alt="user.userData.name"
-                                />
-                            </client-only>
-                        </template>
-                        <template v-else>
-                            <DefaultAvatar class="fill-indigo-500 w-24 h-24"/>
-                        </template>
-                    </template>
-                    <template v-slot:username>
-                        {{ user.userData.name }}
-                    </template>
-                    <template v-slot:profession>{{user.userData.profession}}</template>
-                </SidebarUser>
+                <SidebarUser/>
                 <main class="flex-1">
                     <div class="px-4">
                         <template v-if="user.myCourses">
@@ -123,11 +104,6 @@ import {mapState} from 'vuex'
 
             await this.$store.dispatch('user/fetchMyCourses',this.$store.state.user.userData.id)
             await loader.hide()
-        },
-        methods: {
-            library (){
-                window.location.href = process.env.frontPage;
-            }
         }
     }
 </script>

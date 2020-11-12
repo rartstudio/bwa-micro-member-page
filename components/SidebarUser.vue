@@ -1,20 +1,32 @@
 <template>
     <aside class="transition-all duration-300 bg-indigo-1000 max-h-screen h-screen overflow-y-auto min-h-full" style="width:280px">
         <div class="max-h-screen h-screen fixed bg-indigo-1000 flex flex-col content-between z-50" style="width:280px">
-            <div class="flex flex-col text-center mt-8">
-                <div class="border border-indigo-500 rounded-full mx-auto p-2 inline-flex mb-3">
-                    <div class="rounded-full overflow-hidden">
-                        <slot name="avatar">
-                        </slot>
+            <template v-if="user.userData">
+                <div class="flex flex-col text-center mt-8">
+                    <div class="border border-indigo-500 rounded-full mx-auto p-2 inline-flex mb-3">
+                        <div class="rounded-full overflow-hidden">
+                            <template v-if="user.userData.avatar">
+                                <client-only>
+                                    <img
+                                        class="object-cover w-24 h-24"
+                                        :src="user.userData.avatar"
+                                        :alt="user.userData.name"
+                                    />
+                                </client-only>
+                            </template>
+                            <template v-else>
+                                <DefaultAvatar class="fill-indigo-500 w-24 h-24"/>
+                            </template>
+                        </div>
                     </div>
+                    <h6 class="text-white text-xl">
+                        {{ user.userData.name }}
+                    </h6>
+                    <span class="text-indigo-500 text-sm mt-1">
+                        {{user.userData.profession ? user.userData.profession : Profession }} 
+                    </span>
                 </div>
-                <h6 class="text-white text-xl">
-                    <slot name="username"></slot>
-                </h6>
-                <span class="text-indigo-500 text-sm mt-1">
-                    <slot name="profession">Profession</slot>
-                </span>
-            </div>
+            </template>
             <ul class="main-menu mt-12">
                 <li>
                     <nuxt-link to="/user" class="nav-link">
@@ -32,7 +44,7 @@
                     </nuxt-link>
                 </li>
                 <li>
-                    <nuxt-link to="/settings" class="nav-link ">
+                    <nuxt-link to="/setting" class="nav-link ">
                         Settings
                     </nuxt-link>
                 </li>
@@ -48,6 +60,7 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
     export default {
         data(){
             return {
@@ -57,7 +70,8 @@
         computed: {
             activeRoute(){
                 this.$route.path
-            }
+            },
+            ...mapState(['user'])
         },
         methods : {
             logout (){

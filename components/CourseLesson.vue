@@ -14,6 +14,23 @@ import {mapState} from 'vuex';
         props : {
             lesson : {
                 type: Object
+            },
+            chapterCur: {
+                type: [String,Number]
+            }
+        },
+        watch: {
+            async $route(to,from){
+                let lessonId = to.params.id;
+                let chapterId = this.chapterCur;
+                let chapters = this.course.userCourse.chapters;
+
+                let selectedChapter = chapters.filter(item => item.id == chapterId);
+                let selectedLesson = selectedChapter.lessons.filter(item => item.id == lessonId);
+
+                this.$store.commit('course/SET_CHAPTER',selectedChapter[0]);
+                this.$store.commit('course/SET_VIDEO',selectedLesson[0]);
+
             }
         },
         computed : {

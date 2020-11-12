@@ -6,7 +6,7 @@
         <CourseLesson 
             v-for="lesson in chapter.lessons" 
             :key="`${chapter.id}-${lesson.id}`"
-            :lesson="lesson"
+            :lesson="lesson" :chapterCur="chapter.id"
         />
     </li>
 </template>
@@ -17,7 +17,7 @@
             chapter : {
                 type: Object
             }
-        },
+        }
     }
 </script>
 

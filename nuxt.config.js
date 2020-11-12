@@ -63,7 +63,8 @@ export default {
 
   env : {
     baseUrl: process.env.BASE_URL,
-    frontPage: process.env.FRONT_PAGE
+    frontPage: process.env.FRONT_PAGE,
+    imageUrl: process.env.IMAGE_URL
   },
 
   server: {

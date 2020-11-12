@@ -1,6 +1,6 @@
 <template>
     <aside class="bg-indigo-1000 max-h-screen h-screen overflow-y-auto transition-all duration-300 min-h-full" style="width: 250px">
-        <div class="max-h-screen h-screen fixed bg-indigo-1000 flex flex-col content-between" style="width: 250px">
+        <div class="max-h-screen h-screen fixed bg-indigo-1000 flex flex-col content-between overflow-y-auto" style="width: 250px">
             <ul>
                 <li>
                     <nuxt-link to="/" class="relative flex items-center py-3 px-5 w-full text-left text-white mb-12 mt-3 hover:bg-indigo-700">

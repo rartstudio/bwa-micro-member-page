@@ -23,13 +23,13 @@ import {mapState} from 'vuex';
         computed: {
             ...mapState(['course'])
         },
-        async mounted(){
+        async fetch(){
             this.loadingState = true
             const token = this.$cookies.get('BWAMICRO:token')
             await this.$store.dispatch('user/setHeaderToken',token)
-            // await this.$store.dispatch('course/fetchCourse',this.$route.params.lessons)
-            await this.$store.dispatch('course/fetchLesson',this.$route.params.id)
-            await this.$store.dispatch('course/fetchChapter',this.$store.state.course.lessonVideo.chapter_id)
+            await this.$store.dispatch('course/fetchCourse',this.$route.params.lessons)
+            // await this.$store.dispatch('course/fetchLesson',this.$route.params.id)
+            // await this.$store.dispatch('course/fetchChapter',this.$store.state.course.lessonVideo.chapter_id)
             this.loadingState = false
         }
     }
