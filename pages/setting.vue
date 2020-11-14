@@ -1,29 +1,36 @@
 <template>
     <div>
-        <div class="flex">
-            <SidebarUser/>
-            <main class="flex-1">
-                    <section class="flex flex-col">
-                        <HeaderTitle>
-                            <template v-slot:title>
-                                Settings
-                            </template>
-                            <template v-slot:subtitle>
-                                Secure your information
-                            </template>
-                        </HeaderTitle>
-                    </section>
-                    <div class="w-4/12 pl-12 mt-5">
-                        <SettingForm/>
-                    </div>
-            </main>
-        </div>
+        <template v-if="$fetchState.pending">
+            <div class="vld-parent" ref="loadingContainer"></div>
+        </template>
+        <template v-else-if="$fetchState.error">
+            error while fetching data
+        </template>
+        <template v-else>
+            <div class="flex">
+                <SidebarUser/>
+                <main class="flex-1">
+                        <section class="flex flex-col">
+                            <HeaderTitle>
+                                <template v-slot:title>
+                                    Settings
+                                </template>
+                                <template v-slot:subtitle>
+                                    Secure your information
+                                </template>
+                            </HeaderTitle>
+                        </section>
+                        <div class="w-4/12 pl-12 mt-5">
+                            <SettingForm/>
+                        </div>
+                </main>
+            </div>
+        </template>
     </div>
 </template>
 
 <script>
 import DefaultAvatar from "~/assets/images/default-avatar.svg?inline"
-import {mapState} from 'vuex'
     export default {
         middleware: 'user',
         components : {
@@ -49,9 +56,6 @@ import {mapState} from 'vuex'
             await this.$store.dispatch('user/fetchUser')
 
             await loader.hide()
-        },
-        computed : {
-            ...mapState(['user'])
         },
         //we can have one fetch for each component, 
         //fetch hooks are called in sequence of their hierarchy.

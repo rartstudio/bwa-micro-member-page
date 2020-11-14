@@ -32,7 +32,7 @@ export const actions = {
             })
     },
     fetchLesson({commit},id){
-        return this.$axios.$get(`lessons/${id}`)
+        return this.$axios.$get(`lessons/${id}`,{ progress: false })
             .then(response => {
                 // console.log(response.data[0])
                 commit('SET_VIDEO',response.data)
@@ -42,7 +42,7 @@ export const actions = {
             })
     },
     fetchChapter({commit},id){
-        return this.$axios.$get(`chapters/${id}`)
+        return this.$axios.$get(`chapters/${id}`,{ progress: false })
             .then(response => {
                 console.log(response)
                 commit('SET_CHAPTER',response.data)

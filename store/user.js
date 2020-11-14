@@ -42,6 +42,19 @@ export const mutations = {
     },
     REMOVE_USER(state){
         state.user = null
+    },
+
+    UPDATE_NAME(state,value){
+        state.userData.name = value
+    },
+    UPDATE_EMAIL(state,value){
+        state.userData.email = value
+    },
+    UPDATE_PROFESSION(state,value){
+        state.userData.profession = value
+    },
+    UPDATE_PASSWORD(state,value){
+        state.userData.password = value
     }
 }
 
@@ -66,6 +79,15 @@ export const actions = {
         const expiredTime = moment().add(7,'days')
         const data = JSON.stringify(token)
         this.$cookies.set('BWAMICRO:refresh',data,{expires: expiredTime._d})
+    },
+    fetchAvatar(data){
+        return this.$axios.$post(process.env.imageUrl,data)
+            .then(response =>{
+                console.log(response)
+            })
+            .catch(error => {
+                console.log(error.response)
+            })
     },
     fetchUser({commit,dispatch}){
         return this.$axios.$get('users')

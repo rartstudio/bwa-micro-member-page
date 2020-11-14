@@ -6,7 +6,7 @@
         <!-- we added v-model=``"event.category". As we learned in our previous lesson, using v-model here allows us to listen for the 'input' event that was sent up from BaseSelect’s updateValue method. And when that event happens, we’ll set our EventCreate’s event.category data equal to the value that was sent up. In this case, the value is whichever option was selected. -->
         <select
             :class="[selected ? 'border-teal-500' : 'border-gray-600',
-            !empty ? '' : 'text-gray-500',
+            !empty ? 'text-black' : 'text-black',
             'select-style']"
             :value="value"
             @focus="selected = true"
