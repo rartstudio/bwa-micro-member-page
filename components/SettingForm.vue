@@ -64,6 +64,7 @@
                 <template v-if="getPassError">
                     <FormError :text="getPassError.message"/>
                 </template>
+                
                 <FormSelect
                     label="Occupation"
                     v-model="profession"
@@ -75,15 +76,15 @@
                 <template v-if="user.profession == 'others'">
                     <FormInput 
                         label="Other Occupation" 
-                        v-model="profession"
+                        v-model="otherProfession"
                         type="text"
-                        placeholder="Your Name"
-                        id="userName"
+                        placeholder="Other Occupations"
+                        id="otherOccupations"
                     />
                 </template>
                 <FormButton>
                     <template v-slot:title>
-                        Daftar
+                        Ubah
                     </template>
                 </FormButton>
         </form>
@@ -102,29 +103,30 @@ import {mapGetters} from 'vuex'
                 occupations: ['Web Designer','Front End Developer','Back End Developer','others'],
                 user : {
                     name: '',
-                    email :'',
+                    email : '',
                     password: '',
                     avatar: '',
                     profession: '',
                 },
+                otherProfession: ''
             }
         },
         computed : {
-            ...mapGetters('user',['getNameError','getEmailError','getPassError']),
+            ...mapGetters('user',['getNameError','getEmailError','getPassError','getName','getEmail','getProfession','getUploadAvatar']),
             name :{
                 get () {
-                    return this.$store.state.user.userData.name
+                    return this.getName
                 },
                 set (value) {
-                    this.$store.commit('user/UPDATE_NAME', value)
+                    this.user.name = value   
                 }
             },
             email: {
                 get () {
-                    return this.$store.state.user.userData.email
+                    return this.getEmail
                 },
                 set (value) {
-                    this.$store.commit('user/UPDATE_EMAIL', value)
+                    this.user.email = value   
                 }
             },
             password : {
@@ -132,15 +134,25 @@ import {mapGetters} from 'vuex'
                     return ''
                 },
                 set (value) {
-                    this.$store.commit('user/UPDATE_PASSWORD', value)
+                    this.user.password = value   
                 }
             },
             profession : {
-                get () {
-                    return this.$store.state.user.userData.profession
+                get () { 
+                    if(this.user.profession){
+                        return this.user.profession
+                    }
+                    else {
+                        let others = this.occupations.indexOf(this.getProfession);
+                        if(others == -1) {
+                            this.otherProfession = this.getProfession
+                            return this.user.profession = "others"
+                        }
+                        return this.getProfession
+                    }
                 },
                 set (value) {
-                    this.$store.commit('user/UPDATE_PROFESSION', value)
+                    this.user.profession = value
                 }
             },
             // avatar: {
@@ -171,24 +183,57 @@ import {mapGetters} from 'vuex'
                     this.user.avatar = e.target.result
                 }
                 reader.readAsDataURL(fileObject)
-                console.log(this.user.image)
             },
-            update (){
+            async update (){
+                console.log(this.user)
+                const token = this.$cookies.get('BWAMICRO:token')
                 try {
-                    
                     if(this.user.avatar){
                         const images = {
                             image : this.user.avatar
                         }
-    
-                        await this.$store.dispatch('user/fetchAvatar',images)
+                        await this.$store.dispatch('user/fetchAvatar',images);
                     }
-                    else {
+                    await this.$store.dispatch('user/setHeaderToken',token);
+                    await this.$store.dispatch('user/fetchUser')
+
+                    if(this.$store.state.user.isError){
+                        const refresh = this.$cookies.get('BWAMICRO:refresh')
+                        const user = this.$cookies.get('BWAMICRO:user')
+                        const data = {
+                            refresh_token : refresh,
+                            email : user.email
+                        }
                         
+                        await this.$store.dispatch('user/tokenRefresh',data)
+                        
+                        //if any error will delete and push user to login again
+                        if(this.$store.state.user.isError){
+                            this.$cookies.remove('BWAMICRO:token')
+                            this.$cookies.remove('BWAMICRO:user')
+                            this.$cookies.remove('BWAMICRO:refresh')
+                            loader.hide();
+                            this.$router.push('/login')
+                        }
+
+                        //if no error when refreshing
+                        const newToken = this.$cookies.get('BWAMICRO:token')
+                        await this.$store.dispatch('user/setHeaderToken',newToken)
+                    }
+
+                    this.user.name = this.user.name == '' ? this.getName : this.user.name
+                    this.user.email = this.user.email == '' ? this.getEmail : this.user.email
+                    if(this.user.profession == 'others'){
+                        this.user.profession = this.otherProfession
+                    }
+                    this.user.avatar = `http://${this.getUploadAvatar}`
+                    await this.$store.dispatch('user/fetchUpdateProfile',this.user);
+                    if(!this.$store.state.user.isError){
+                        await this.$store.dispatch('user/fetchLogout')
                     }
                 }
                 catch (e){
-
+                    console.log(e)
                 }
                 // if(this.user.profession == 'others'){
                 //     this.user.profession == this.profession

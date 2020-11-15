@@ -99,9 +99,9 @@ import {mapState} from 'vuex'
                 //if no error when refreshing
                 const newToken = this.$cookies.get('BWAMICRO:token')
                 await this.$store.dispatch('user/setHeaderToken',newToken)
-                await this.$store.dispatch('user/fetchUser')
             }
-
+            
+            await this.$store.dispatch('user/fetchUser')
             await this.$store.dispatch('user/fetchMyCourses',this.$store.state.user.userData.id)
             await loader.hide()
         }

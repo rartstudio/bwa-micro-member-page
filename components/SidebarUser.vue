@@ -9,7 +9,7 @@
                                 <client-only>
                                     <img
                                         class="object-cover w-24 h-24"
-                                        :src="user.userData.avatar"
+                                        :src="`${user.userData.avatar}`"
                                         :alt="user.userData.name"
                                     />
                                 </client-only>

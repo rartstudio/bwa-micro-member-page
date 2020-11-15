@@ -12,10 +12,14 @@ export const state = () => ({
     userData: null,
     error : null,
     submitError : null,
-    myCourses: null
+    myCourses: null,
+    avatar: null
 })
 
 export const mutations = {
+    SET_AVATAR(state,data){
+        state.avatar = data
+    },
     SET_MY_COURSES(state,data){
         state.myCourses = data
     },
@@ -44,18 +48,21 @@ export const mutations = {
         state.user = null
     },
 
-    UPDATE_NAME(state,value){
-        state.userData.name = value
-    },
-    UPDATE_EMAIL(state,value){
-        state.userData.email = value
-    },
-    UPDATE_PROFESSION(state,value){
-        state.userData.profession = value
-    },
-    UPDATE_PASSWORD(state,value){
-        state.userData.password = value
-    }
+    // UPDATE_NAME(state,value){
+    //     state.userData.name = value
+    // },
+    // UPDATE_EMAIL(state,value){
+    //     state.userData.email = value
+    // },
+    // UPDATE_PROFESSION(state,value){
+    //     state.userData.profession = value
+    // },
+    // UPDATE_PASSWORD(state,value){
+    //     state.userData.password = value
+    // },
+    // UPDATE_AVATAR(state,data){
+    //     state.userData.avatar = data
+    // }
 }
 
 export const actions = {
@@ -80,13 +87,29 @@ export const actions = {
         const data = JSON.stringify(token)
         this.$cookies.set('BWAMICRO:refresh',data,{expires: expiredTime._d})
     },
-    fetchAvatar(data){
-        return this.$axios.$post(process.env.imageUrl,data)
+    fetchAvatar({commit},data){
+        console.log(data)
+        return this.$axios.$post(`${process.env.imageUrl}/media`,data)
             .then(response =>{
+                commit('SET_AVATAR',response.data)
+                commit('SET_ERROR',false)
+            })
+            .catch(error => {
+                commit('SET_ERROR',true)
+                commit('SET_ERROR_NOTIF',error.response.data.message)
+            })
+    },
+    fetchUpdateProfile({commit,state},data){
+        return this.$axios.$put('users',data)
+            .then(response => {
                 console.log(response)
             })
             .catch(error => {
-                console.log(error.response)
+                commit('SET_ERROR',true)
+                if(error.response.status == 404) {
+                    commit('SET_ERROR_NOTIF',error.response.data.message)
+                }
+                commit('SET_SUBMIT_ERROR',error.response.data.message)
             })
     },
     fetchUser({commit,dispatch}){
@@ -201,5 +224,17 @@ export const getters = {
             return result[0]
         }
         return false
+    },
+    getName : state => {
+        return state.userData.name
+    },
+    getEmail: state => {
+        return state.userData.email
+    },
+    getProfession : state => {
+        return state.userData.profession
+    },
+    getUploadAvatar : state => {
+        return state.avatar.image
     }
 }
