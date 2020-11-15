@@ -13,7 +13,8 @@ export const state = () => ({
     error : null,
     submitError : null,
     myCourses: null,
-    avatar: null
+    avatar: null,
+    transactions: null
 })
 
 export const mutations = {
@@ -47,22 +48,9 @@ export const mutations = {
     REMOVE_USER(state){
         state.user = null
     },
-
-    // UPDATE_NAME(state,value){
-    //     state.userData.name = value
-    // },
-    // UPDATE_EMAIL(state,value){
-    //     state.userData.email = value
-    // },
-    // UPDATE_PROFESSION(state,value){
-    //     state.userData.profession = value
-    // },
-    // UPDATE_PASSWORD(state,value){
-    //     state.userData.password = value
-    // },
-    // UPDATE_AVATAR(state,data){
-    //     state.userData.avatar = data
-    // }
+    SET_TRANSACTION(state,data){
+        state.transactions = data
+    }
 }
 
 export const actions = {
@@ -88,10 +76,20 @@ export const actions = {
         this.$cookies.set('BWAMICRO:refresh',data,{expires: expiredTime._d})
     },
     fetchAvatar({commit},data){
-        console.log(data)
         return this.$axios.$post(`${process.env.imageUrl}/media`,data)
             .then(response =>{
                 commit('SET_AVATAR',response.data)
+                commit('SET_ERROR',false)
+            })
+            .catch(error => {
+                commit('SET_ERROR',true)
+                commit('SET_ERROR_NOTIF',error.response.data.message)
+            })
+    },
+    fetchUserTransactions({commit}){
+        return this.$axios.$get('orders')
+            .then(response => {
+                commit('SET_TRANSACTION',response.data)
                 commit('SET_ERROR',false)
             })
             .catch(error => {

@@ -155,14 +155,6 @@ import {mapGetters} from 'vuex'
                     this.user.profession = value
                 }
             },
-            // avatar: {
-            //     get () {
-            //         return this.$store.state.user.userData.profession
-            //     },
-            //     set (value) {
-            //         this.$store.commit('user/UPDATE_PROFESSION', value)
-            //     }
-            // },
             isEmpty (){
                 return this.user.profession == '' ? true : false
             },
@@ -235,10 +227,6 @@ import {mapGetters} from 'vuex'
                 catch (e){
                     console.log(e)
                 }
-                // if(this.user.profession == 'others'){
-                //     this.user.profession == this.profession
-                // }
-                // this.$store.dispatch('user/fetchRegister',this.user)
             }
         },
         beforeDestroy(){

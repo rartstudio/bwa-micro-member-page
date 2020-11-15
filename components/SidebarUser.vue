@@ -15,7 +15,7 @@
                                 </client-only>
                             </template>
                             <template v-else>
-                                <DefaultAvatar class="fill-indigo-500 w-24 h-24"/>
+                                <DefaultUser class="fill-indigo-500 w-24 h-24"/>
                             </template>
                         </div>
                     </div>
@@ -60,12 +60,16 @@
 </template>
 
 <script>
+import DefaultUser from "~/assets/images/default-avatar.svg?inline"
 import {mapState} from 'vuex'
     export default {
         data(){
             return {
                 homePage: process.env.frontPage
             }
+        },
+        components: {
+            DefaultUser
         },
         computed: {
             activeRoute(){

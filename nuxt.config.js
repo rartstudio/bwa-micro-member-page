@@ -36,6 +36,15 @@ export default {
     '@nuxtjs/svg',
     '@nuxtjs/dotenv',
     '@nuxtjs/moment',
+    ['vue-currency-filter/nuxt', {
+      symbol: 'Rp',
+      thousandsSeparator: '.',
+      fractionCount: 0,
+      fractionSeparator: '.',
+      symbolPosition: 'front',
+      symbolSpacing: true,
+      avoidEmptyDecimals: undefined,
+    }]
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
