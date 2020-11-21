@@ -6,7 +6,7 @@
         <section class="container mx-auto pt-10 px-4">
             <LoginForm/>
         </section>
-        <section class="mt-24 bg-indigo-1000 py-12">
+        <section class="mt-24 bg-indigo-1000 py-12 px-4">
             <FooterPart/>
         </section>
     </div>

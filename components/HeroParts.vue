@@ -1,5 +1,5 @@
 <template>
-    <div class="w-5/12 flex justify-end pt-24 pr-16">
+    <div class="hidden w-1/2 md:flex justify-end pt-24 pr-16">
         <div class="relative" style="width: 369px; height: 440px">
             <div class="absolute border-indigo-700 border-2 -mt-8 -ml-16 left-0" style="width:324px; height: 374px"></div>
             <div class="absolute w-full h-full -mb-8 -ml-8">

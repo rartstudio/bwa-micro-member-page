@@ -1,5 +1,5 @@
 <template>
-    <div class="w-1/4 px-4 mb-4">
+    <div class="w-full md:w-1/4 px-4 mb-4">
         <div class="item relative">
             <figure class="item-image">
                 <IconPlay/>

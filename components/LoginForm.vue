@@ -1,8 +1,8 @@
 <template>
-    <div class="flex justify-center items-center pb-24">
-        <div class="w-3/12">
+    <div class="flex justify-start md:justify-center md:items-center pb-24">
+        <div class="w-full md:w-3/12">
             <h1 class="text-4xl text-gray-900 mb-6">
-                <span class="font-bold">Continue </span>Study,<br/>
+                <span class="font-bold">Continue </span>Study,<br class="hidden md:block"/>
                 Finish your <span class="font-bold">Goals</span>
             </h1>
             <form @submit.prevent="login">
@@ -32,6 +32,9 @@
                 <template v-if="getPassError">
                     <FormError :text="getPassError.message"/>
                 </template>
+                <template v-if="getPassError == 'user not found'">
+                    <FormError :text="getPassError"/>
+                </template>
                 <FormButton>
                     <template v-slot:title>
                         Masuk
@@ -39,7 +42,7 @@
                 </FormButton>
             </form>
         </div>
-        <div class="w-1/12"></div>
+        <div class="w-1/12 hidden md:block"></div>
         <HeroParts>
             <template v-slot:images>
                 <img 
@@ -66,13 +69,15 @@ import {mapGetters} from 'vuex'
             ...mapGetters('user',['getEmailError','getPassError'])
         },
         methods : {
-            async login (){
+            login (){
                 try{
-                    await this.$store.dispatch('user/fetchLogin',this.user)
-                    if(!this.$store.state.user.isError){
-                        await this.$store.dispatch('user/fetchUser')
-                        await this.$router.push({name: 'user'})
-                    }
+                    this.$store.dispatch('user/fetchLogin',this.user)
+                            .then(() => {
+                                if(!this.$store.state.user.isError){
+                                    this.$store.dispatch('user/fetchUser')
+                                    this.$router.push({name: 'user'})
+                                }
+                            })
                 }
                 catch (e){
 

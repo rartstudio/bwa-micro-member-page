@@ -1,6 +1,6 @@
 <template>
     <div class="flex justify-center items-center pb-24">
-        <div class="w-3/12">
+        <div class="w-full md:w-3/12">
             <h1 class="text-4xl text-gray-900 mb-6">
                 <span class="font-bold">Grow Skills</span>
                 From, <br/>

@@ -5,7 +5,7 @@ import moment from 'moment';
 
 // Take note that state value should always be a function to avoid unwanted shared state on the server side.
 export const state = () => ({
-    isError: false,
+    isError: null,
     isLoading: false,
     course : null,
     token: null,
@@ -137,7 +137,8 @@ export const actions = {
                 this.$cookies.remove('BWAMICRO:refresh')
                 this.$cookies.remove('BWAMICRO:user')
                 this.$axios.setHeader('Authorization','')
-                window.location.href = process.env.frontPage;
+                // window.location.href = process.env.frontPage;
+                this.$router.push('/login');
             })
             .catch(e => console.log(e))
     },
@@ -172,11 +173,10 @@ export const actions = {
                 dispatch('setCookieToken',response.data.token)
                 dispatch('setCookieRefresh',response.data.refresh_token)
                 dispatch('setHeaderToken',response.data.token)
-                // dispatch('fetchUser')
                 commit('SET_ERROR',false)
-                // this.$router.push('/user')
             })
-            .catch(error => {                
+            .catch(error => {           
+                console.log(error.response);     
                 commit('SET_ERROR',true)
                 if(error.response.status == 404) {
                     commit('SET_ERROR_NOTIF',error.response.data.message)
@@ -209,17 +209,23 @@ export const getters = {
     },
     getEmailError : state => {
         let error = state.submitError
-        if(error) {
+        if(Array.isArray(error)) {
             let result = error.filter(item => item.field == 'email')
             return result[0]
+        }
+        if(typeof error == 'string'){
+            return error
         }
         return false
     },
     getPassError : state => {
         let error = state.submitError
-        if(error){
+        if(Array.isArray(error)) {
             let result = error.filter(item => item.field == 'password')
             return result[0]
+        }
+        if(typeof error == 'string'){
+            return error
         }
         return false
     },

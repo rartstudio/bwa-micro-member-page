@@ -18,7 +18,7 @@ import {mapGetters} from 'vuex'
     export default {
         props: {
             error : {
-                type: [Boolean,Object],
+                type: [Boolean,Object,String],
                 default : false
             },
             inputId: {

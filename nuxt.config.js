@@ -60,6 +60,7 @@ export default {
 
   axios : {
     baseURL: process.env.BASE_URL,
+    frontPage: process.env.FRONT_PAGE,
     credentials: true,
   },
 
