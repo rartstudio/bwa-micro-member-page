@@ -1,10 +1,10 @@
 <template>
-    <StateLayout link="/login">
+    <StateLayout link="/login" class="px-4">
         <template v-slot:state-image>
             <img
                 src="~assets/images/illustration-private.jpg"
                 alt="Ooops we lost you"
-                class="h-64"
+                class="h-48 md:h-64"
             />    
         </template>
         <template v-slot:state-title>

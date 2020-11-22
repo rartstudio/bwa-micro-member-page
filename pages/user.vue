@@ -11,14 +11,14 @@
                 <SidebarUser/>
                 <main class="flex-1">
                     <div class="px-4">
-                        <template v-if="user.myCourses">
+                        <template v-if="user.myCourses.length != 0">
                             <CourseContainer/>
                         </template>
                         <template v-else>
                             <StateLayout>
                                 <template v-slot:state-image>
                                     <img
-                                        class="h-64"
+                                        class="h-48 md:h-64"
                                         src="~assets/images/illustration-myclass-empty.jpg"
                                         alt="Ooops we lost you"
                                     />    

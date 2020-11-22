@@ -106,6 +106,9 @@ import {mapGetters} from 'vuex'
                     this.user.profession == this.profession
                 }
                 this.$store.dispatch('user/fetchRegister',this.user)
+                    .then(() => {
+                        this.$router.push('/login')
+                    })
             }
         }
     }

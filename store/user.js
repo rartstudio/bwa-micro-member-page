@@ -14,7 +14,8 @@ export const state = () => ({
     submitError : null,
     myCourses: null,
     avatar: null,
-    transactions: null
+    transactions: null,
+    registerMessage: null
 })
 
 export const mutations = {
@@ -50,6 +51,9 @@ export const mutations = {
     },
     SET_TRANSACTION(state,data){
         state.transactions = data
+    },
+    SET_REGISTER_MESSAGE(state,data){
+        state.registerMessage = data
     }
 }
 
@@ -161,6 +165,7 @@ export const actions = {
         return this.$axios.$post('users/register',credential)
             .then(response => {
                 commit('SET_ERROR',false)
+                commit('SET_REGISTER_MESSAGE','Your Register has been success please login now')
             })
             .catch(error => {
                 commit('SET_SUBMIT_ERROR',error.response.data.message)
@@ -231,6 +236,9 @@ export const getters = {
     },
     getName : state => {
         return state.userData.name
+    },
+    getAvatar: state => {
+        return state.userData.avatar
     },
     getEmail: state => {
         return state.userData.email

@@ -9,7 +9,7 @@
         <template v-else>
             <div class="flex">
                 <SidebarUser/>
-                <main class="flex-1">
+                <main class="flex-1 relative">
                         <section class="flex flex-col">
                             <HeaderTitle>
                                 <template v-slot:title>
@@ -20,7 +20,7 @@
                                 </template>
                             </HeaderTitle>
                         </section>
-                        <div class="w-4/12 pl-12 mt-5">
+                        <div class="px-4 md:w-4/12 md:pl-12 mt-5">
                             <SettingForm/>
                         </div>
                 </main>

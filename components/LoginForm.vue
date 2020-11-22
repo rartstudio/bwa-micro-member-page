@@ -5,6 +5,9 @@
                 <span class="font-bold">Continue </span>Study,<br class="hidden md:block"/>
                 Finish your <span class="font-bold">Goals</span>
             </h1>
+            <p class="text-teal-500 mb-2">
+                {{ this.$store.state.user.registerMessage ? this.$store.state.user.registerMessage : '' }}
+            </p>
             <form @submit.prevent="login">
                 <!-- v-model syntatic sugar
                     :value="user.email"

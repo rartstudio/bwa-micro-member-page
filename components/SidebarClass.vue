@@ -1,5 +1,5 @@
 <template>
-    <aside :class="[ToggleMenu ? 'w-full': '','transition-all flex duration-300  max-h-screen overflow-y-auto min-h-full md:w-64']">
+    <aside :class="[ToggleMenu ? 'w-full': '','transition-all flex duration-900  max-h-screen overflow-y-auto min-h-full md:w-64']">
         <template v-if="isNotMobile">
             <div :class="[ToggleMenu ? ' fixed z-30 w-3/4': ' ','max-h-screen h-screen bg-indigo-1000 flex flex-col content-between overflow-y-auto']">
                 <ul>

@@ -10,6 +10,7 @@
             <div class="flex">
                 <SidebarUser/>
                 <main class="flex-1">
+                    <template v-if="user.transactions.length != 0">
                         <section class="flex flex-col">
                             <HeaderTitle>
                                 <template v-slot:title>
@@ -20,9 +21,34 @@
                                 </template>
                             </HeaderTitle>
                         </section>
-                        <section class="flex flex-wrap flex-col mt-8 pl-14 w-11/12">
+                        <section class="flex flex-wrap flex-col mt-8 px-4 md:pl-14 md:w-11/12">
                             <TransactionCard v-for="transaction in user.transactions" :key="transaction.id" :transaction="transaction"/>
                         </section>
+                    </template>
+                    <template v-else>
+                            <StateLayout>
+                                <template v-slot:state-image>
+                                    <img
+                                        class="h-48 md:h-64"
+                                        src="~assets/images/illustration-myclass-empty.jpg"
+                                        alt="Ooops we lost you"
+                                    />    
+                                </template>
+                                <template v-slot:state-title>
+                                    Time to Invest
+                                </template>
+                                <template v-slot:state-subtitle>
+                                    It seems you don’t have any class yet so <br/> let’s get them and grow your skills
+                                </template>
+                                <template v-slot:state-button>
+                                    <a class="cursor-pointer bg-orange-500 hover:bg-orange-400 transition-all duration-200 focus:outline-none shadow-inner text-white px-6 py-3 mt-5"
+                                    :href="`${homePage}/courses`"
+                                    rel="noopener noreferrer">
+                                        Find Courses
+                                    </a>
+                                </template>
+                            </StateLayout>
+                        </template>
                 </main>
             </div>
         </template>

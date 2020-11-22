@@ -2,7 +2,7 @@
     <StateLayout>
         <template v-slot:state-image>
             <img
-                class="h-64"
+                class="h-48 md:h-64"
                 src="~assets/images/illustration-notfound.jpg"
                 alt="Ooops we lost you"
             />    

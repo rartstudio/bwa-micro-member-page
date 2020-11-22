@@ -4,7 +4,7 @@
             <img
                 src="~assets/images/illustration-notfound.jpg"
                 alt="Ooops we lost you"
-                class="h-64"
+                class="h-48 md:h-64"
             />    
         </template>
         <template v-slot:state-title>

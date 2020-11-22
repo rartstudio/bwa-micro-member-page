@@ -19,6 +19,7 @@
             this.$store.commit('user/SET_ERROR',false)
             this.$store.commit('user/SET_ERROR_NOTIF',null)
             this.$store.commit('user/SET_SUBMIT_ERROR')
+            this.$store.commit('user/SET_REGISTER_MESSAGE',null)
         }
     }
 </script>

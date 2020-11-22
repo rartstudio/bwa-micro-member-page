@@ -7,6 +7,9 @@
                         <template v-if="user.avatar">
                             <img :src="user.avatar" alt="preview" class="object-cover w-full h-full">
                         </template>
+                        <template v-else-if="getAvatar">
+                            <img :src="getAvatar" alt="preview" class="object-cover w-full h-full">
+                        </template>
                         <template v-else>
                             <DefaultUser class="fill-indigo-500" style="width:90px;height:90px">
                             </DefaultUser>
@@ -112,7 +115,7 @@ import {mapGetters} from 'vuex'
             }
         },
         computed : {
-            ...mapGetters('user',['getNameError','getEmailError','getPassError','getName','getEmail','getProfession','getUploadAvatar']),
+            ...mapGetters('user',['getNameError','getEmailError','getPassError','getName','getEmail','getProfession','getUploadAvatar','getAvatar']),
             name :{
                 get () {
                     return this.getName
