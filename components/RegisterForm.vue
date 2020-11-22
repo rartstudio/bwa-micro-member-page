@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-center items-center pb-24">
+    <div class="md:flex md:justify-center md:items-center md:pb-24">
         <div class="w-full md:w-3/12">
             <h1 class="text-4xl text-gray-900 mb-6">
                 <span class="font-bold">Grow Skills</span>
@@ -66,8 +66,9 @@
                     </template>
                 </FormButton>
             </form>
+            <nuxt-link to="/login" class="block text-center mt-4 text-gray-700">Sudah punya akun ? login disini</nuxt-link>
         </div>
-        <div class="w-1/12"></div>
+        <div class="md:w-1/12"></div>
         <HeroParts>
             <template v-slot:images>
                 <img 

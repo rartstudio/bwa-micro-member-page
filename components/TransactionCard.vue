@@ -23,12 +23,12 @@
         </div>
         <div class="px-4 flex justify-center">
             <template v-if="transaction.status === 'pending'">
-                <nuxt-link to="/" class="bg-orange-500 hover:bg-orange-400 transition-all duration-200 focus:outline-none text-white px-6 py-3 mt-0 whitespace-no-wrap md:ml-4 w-full">
+                <a :href="transaction.snap_url" class="text-center bg-orange-500 hover:bg-orange-400 transition-all duration-200 focus:outline-none text-white px-6 py-3 mt-0 whitespace-no-wrap md:ml-4 w-full" target="_blank" rel="noopener noreferrer">
                     Lunasi
-                </nuxt-link>
+                </a>
             </template>
             <template v-else>
-                <nuxt-link to="/" class="bg-gray-250 hover:bg-gray-300 transition-all duration-200 focus:outline-none px-6 py-3 mt-0 whitespace-no-wrap md:ml-4 text-gray-600 w-full">
+                <nuxt-link :to="`/skill/${transaction.course_id}`" class="text-center bg-gray-250 hover:bg-gray-300 transition-all duration-200 focus:outline-none px-6 py-3 mt-0 whitespace-no-wrap md:ml-4 text-gray-600 w-full">
                     Lihat Kelas
                 </nuxt-link>
             </template>

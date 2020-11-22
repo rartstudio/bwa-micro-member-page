@@ -9,7 +9,7 @@
                     <img
                         src="~assets/images/illustration-joined.jpg"
                         alt="Success join class"
-                        class="h-64"
+                        class="h-48 md:h-64"
                     />    
                 </template>
                 <template v-slot:state-title>
@@ -33,6 +33,7 @@
 <script>
 import {mapState} from 'vuex'
     export default {
+        middleware: 'user',
         data() {
             return {
                 loadingState : true

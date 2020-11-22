@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-start md:justify-center md:items-center pb-24">
+    <div class="flex justify-start md:justify-center md:items-center md:pb-24">
         <div class="w-full md:w-3/12">
             <h1 class="text-4xl text-gray-900 mb-6">
                 <span class="font-bold">Continue </span>Study,<br class="hidden md:block"/>
@@ -44,6 +44,7 @@
                     </template>
                 </FormButton>
             </form>
+            <nuxt-link to="/register" class="block text-center mt-4 text-gray-700">Belum punya akun ? daftar disini</nuxt-link>
         </div>
         <div class="w-1/12 hidden md:block"></div>
         <HeroParts>
