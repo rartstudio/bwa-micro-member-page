@@ -4,7 +4,7 @@
             
         </template>
         <template v-else>
-            <div class="flex">
+            <div class="md:flex">
                 <SidebarClass/>
                 <CourseVideo/>
             </div>
@@ -15,6 +15,7 @@
 <script>
 import {mapState} from 'vuex';
     export default {
+        fetchOnServer: false,
         data() {
             return {
                 loadingState: true

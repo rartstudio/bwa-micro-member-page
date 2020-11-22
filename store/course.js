@@ -22,7 +22,7 @@ export const actions = {
     fetchCourse({commit},id){
         return this.$axios.$get(`courses/${id}`)
             .then(response => {
-                console.log(response.data)
+                // console.log(response.data)
                 commit('SET_COURSE',response.data);
             })
             .catch(error => {
@@ -44,7 +44,7 @@ export const actions = {
     fetchChapter({commit},id){
         return this.$axios.$get(`chapters/${id}`,{ progress: false })
             .then(response => {
-                console.log(response)
+                // console.log(response)
                 commit('SET_CHAPTER',response.data)
             })
             .catch(error => {
@@ -61,13 +61,13 @@ export const getters = {
         return state.userCourse.chapters[0].lessons[0].video
     },
     getLessonName : state => {
-        if(state.userCourse.chapters.length == 0) {
+        if(!state.userCourse) {
             return ''
         }
         return state.userCourse.chapters[0].lessons[0].name
     },
     getChapterName: state => {
-        if(state.userCourse.chapters.length == 0) {
+        if(!state.userCourse) {
             return ''
         }
         return state.userCourse.chapters[0].name
