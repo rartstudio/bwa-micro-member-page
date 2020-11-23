@@ -61,6 +61,7 @@ export const actions = {
     setHeaderToken({commit},token){
         // Overrides `Authorization` header with new value
         this.$axios.setHeader('Authorization',token)
+        this.$axios.setHeader('Access-Control-Allow-Origin','*');
         commit('SET_TOKEN',token)
     },
     setCookieToken({commit},token){
